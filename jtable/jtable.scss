@@ -1,0 +1,55 @@
+$border :1px solid #e5e5e5;
+$cellPading: 7.5px;
+
+.jtable-view {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 500px;
+    border: $border;
+
+    .jtable-header {
+
+        user-select: none;
+        width: 100%;
+        overflow: hidden;
+        .jtable-header-row{
+            width: max-content;
+            .jtable-header-item {
+                display: inline-block;
+                padding: $cellPading;
+                font-weight: bold;
+                border-bottom: $border;
+            }
+    
+            .jtable-header-item:not(:last-child) {
+                border-right: $border;
+            }
+        }
+       
+    }
+
+    .jtable-body {
+        width: 100%;
+        overflow: auto;
+        flex: 1;
+        .jtable-body-row {
+            width: max-content;
+            border-bottom: $border;
+
+            .jtable-body-cell {
+                display: inline-block;
+                padding: $cellPading;
+                white-space: nowrap;
+            }
+
+            .jtable-body-cell:not(:last-child) {
+                border-right: $border;
+            }
+        }
+
+        .jtable-body-row:last-child {
+            border-bottom: $border;
+        }
+    }
+}
