@@ -1,10 +1,16 @@
 .jtable-view {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   width: 100%;
   height: 500px;
   border: 1px solid #e5e5e5;
 }
+
 .jtable-view .jtable-header {
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -13,44 +19,79 @@
   width: 100%;
   overflow: hidden;
 }
-.jtable-view .jtable-header .jtable-header-row.full-width {
-  display: flex;
+
+.jtable-view .jtable-header .jtable-header-row {
+  border-bottom: 1px solid #e5e5e5;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  min-width: 100%;
 }
-.jtable-view .jtable-header .jtable-header-row.max-width {
-  display: block !important;
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-}
+
 .jtable-view .jtable-header .jtable-header-row .jtable-header-item {
-  flex: 1;
-  display: inline-block;
   padding: 7.5px;
   font-weight: bold;
-  border-bottom: 1px solid #e5e5e5;
 }
+
 .jtable-view .jtable-header .jtable-header-row .jtable-header-item:not(:last-child) {
   border-right: 1px solid #e5e5e5;
 }
+
 .jtable-view .jtable-body {
   width: 100%;
   overflow: auto;
-  flex: 1;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
 }
+
 .jtable-view .jtable-body .jtable-body-row {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  min-width: 100%;
   border-bottom: 1px solid #e5e5e5;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
 }
+
 .jtable-view .jtable-body .jtable-body-row .jtable-body-cell {
-  display: inline-block;
   padding: 7.5px;
   white-space: nowrap;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
+
 .jtable-view .jtable-body .jtable-body-row .jtable-body-cell:not(:last-child) {
   border-right: 1px solid #e5e5e5;
 }
-.jtable-view .jtable-body .jtable-body-row:last-child {
-  border-bottom: 1px solid #e5e5e5;
-}/*# sourceMappingURL=jtable.css.map */
+
+.jtable-view .jtable-body .jtable-body-row:hover {
+  background-color: #ccc;
+  cursor: default;
+}
+
+.jtable-view .jtable-body .jtable-body-row-empty {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100%;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.jtable-view .jtable-footer {
+  height: 30px;
+  width: 100%;
+}
+
+.text-center {
+  text-align: center;
+}
+/*# sourceMappingURL=jtable.css.map */

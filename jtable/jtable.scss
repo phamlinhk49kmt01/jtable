@@ -9,27 +9,17 @@ $cellPading: 7.5px;
     border: $border;
 
     .jtable-header {
- 
         user-select: none;
         width: 100%;
         overflow: hidden;
         .jtable-header-row{
+            border-bottom: $border;
+            display: inline-flex;
+            min-width: 100%;
 
-            &.full-width{
-                display: flex;
-            }
-            
-            &.max-width{
-                display: block !important;
-                width: max-content;
-            }
-       
             .jtable-header-item {
-                flex: 1;
-                display: inline-block;
                 padding: $cellPading;
                 font-weight: bold;
-                border-bottom: $border;
             }
     
             .jtable-header-item:not(:last-child) {
@@ -44,22 +34,40 @@ $cellPading: 7.5px;
         overflow: auto;
         flex: 1;
         .jtable-body-row {
-            width: max-content;
+            min-width: 100%;
             border-bottom: $border;
+            display: inline-flex;
 
             .jtable-body-cell {
-                display: inline-block;
                 padding: $cellPading;
                 white-space: nowrap;
+                display: flex;
+                align-items: center;
             }
 
             .jtable-body-cell:not(:last-child) {
                 border-right: $border;
             }
+            &:hover{
+                background-color: #ccc;
+                cursor: default;
+            }
         }
 
-        .jtable-body-row:last-child {
-            border-bottom: $border;
+        .jtable-body-row-empty{
+            display: flex;
+           height: 100%;
+            align-items: center;
+            justify-content: center;
         }
+
     }
+    .jtable-footer{
+        height: 30px;
+        width: 100%;
+    }
+}
+
+.text-center{
+    text-align: center;
 }
