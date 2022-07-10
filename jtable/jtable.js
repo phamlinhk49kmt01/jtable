@@ -17,15 +17,16 @@
             $parent.prepend(table.element);
             table.renderHeader();
 
-
-
-
-            if (typeof options.ajax != undefined) {
+            if (typeof options.ajax != 'undefined') {
                 table.getDataAjax().then(function (response) {
                     table.data = response.products;
                     console.log(response)
                     table.renderBody();
                 });
+            }
+            else if(typeof options.data != 'undefined'){
+                table.data =  options.data;
+                table.renderBody();
             }
         },
         getDataAjax: function () {
@@ -57,6 +58,16 @@
             table.element.append($header)
         },
         renderBody: function () {
+            let _widthAvalible =  $('.jtable-header').width();
+
+            let _widthRowHeader = $('.jtable-header-item:last-child').offset().left - $('.jtable-header-row').offset().left  + $('.jtable-header-item:last-child').width();
+
+
+            console.log('_widthAvalible',_widthAvalible,'_widthRowHeader',_widthRowHeader);
+            if(_widthRowHeader < _widthAvalible){
+                $('.jtable-header-row').addClass('full-width');
+            }
+
             console.time("render");
             let $body = $('<div class="jtable-body">');
             table.element.append($body)

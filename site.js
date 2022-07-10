@@ -1,13 +1,14 @@
 var page = {
     getData: function(){
         $('#my-table').JTable({
-            ajax: {
-                url:'https://dummyjson.com/products',
-                type:'get',
-                dataResponse: function(data){
-                    return data;
-                }
-            }, 
+            // ajax: {
+            //     url:'https://dummyjson.com/products',
+            //     type:'get',
+            //     dataResponse: function(data){
+            //         return data;
+            //     }
+            // }, 
+            data:[],
             columns:[
                 { title: 'name',data:'title' },
                  { title: 'description',data:'description' },

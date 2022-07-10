@@ -9,13 +9,23 @@ $cellPading: 7.5px;
     border: $border;
 
     .jtable-header {
-
+ 
         user-select: none;
         width: 100%;
         overflow: hidden;
         .jtable-header-row{
-            width: max-content;
+
+            &.full-width{
+                display: flex;
+            }
+            
+            &.max-width{
+                display: block !important;
+                width: max-content;
+            }
+       
             .jtable-header-item {
+                flex: 1;
                 display: inline-block;
                 padding: $cellPading;
                 font-weight: bold;
