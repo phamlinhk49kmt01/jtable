@@ -1,16 +1,45 @@
 .jtable-view {
-  display: -webkit-box;
-  display: -ms-flexbox;
+  position: relative;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  flex-direction: column;
   width: 100%;
   height: 500px;
   border: 1px solid #e5e5e5;
 }
-
+.jtable-view .jtable-loader {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.jtable-view .jtable-loader.hide {
+  display: none;
+}
+.jtable-view .jtable-loader svg path,
+.jtable-view .jtable-loader svg rect {
+  fill: #ff6700;
+}
+.jtable-view .jtable-loader .loader {
+  font-family: "roboto";
+  border-radius: 5px;
+  padding: 5px 10px;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+  background-color: white;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+}
 .jtable-view .jtable-header {
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -19,79 +48,106 @@
   width: 100%;
   overflow: hidden;
 }
-
 .jtable-view .jtable-header .jtable-header-row {
+  background-color: #ccc;
   border-bottom: 1px solid #e5e5e5;
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
   display: inline-flex;
   min-width: 100%;
 }
-
 .jtable-view .jtable-header .jtable-header-row .jtable-header-item {
   padding: 7.5px;
   font-weight: bold;
 }
-
 .jtable-view .jtable-header .jtable-header-row .jtable-header-item:not(:last-child) {
   border-right: 1px solid #e5e5e5;
 }
-
 .jtable-view .jtable-body {
   width: 100%;
   overflow: auto;
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+  flex: 1;
 }
-
 .jtable-view .jtable-body .jtable-body-row {
   min-width: 100%;
   border-bottom: 1px solid #e5e5e5;
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
   display: inline-flex;
 }
-
 .jtable-view .jtable-body .jtable-body-row .jtable-body-cell {
   padding: 7.5px;
   white-space: nowrap;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  align-items: center;
 }
-
 .jtable-view .jtable-body .jtable-body-row .jtable-body-cell:not(:last-child) {
   border-right: 1px solid #e5e5e5;
 }
-
 .jtable-view .jtable-body .jtable-body-row:hover {
   background-color: #ccc;
   cursor: default;
 }
-
 .jtable-view .jtable-body .jtable-body-row-empty {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   height: 100%;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  align-items: center;
+  justify-content: center;
 }
-
 .jtable-view .jtable-footer {
-  height: 30px;
-  width: 100%;
+  border-top: 1px solid #e5e5e5;
+  padding: 5px;
+}
+.jtable-view .jtable-footer .jtable-footer-paging-info {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  float: right;
+  text-align: right;
+  padding-top: 5px;
+  margin-right: 10px;
+}
+.jtable-view .jtable-footer .jtable-footer-paging-button {
+  display: flex;
+  align-items: center;
+  float: left;
+}
+.jtable-view .jtable-footer .jtable-footer-paging-button button {
+  background-color: #04aa6d;
+  border: 1px solid green;
+  color: white;
+  padding: 5px 15px;
+  cursor: pointer;
+  float: left;
+}
+.jtable-view .jtable-footer .jtable-footer-paging-button button:not(:last-child) {
+  border-right: none;
+}
+.jtable-view .jtable-footer .jtable-footer-paging-button button:hover {
+  background-color: #3e8e41;
+}
+.jtable-view .jtable-footer .jtable-footer-paging-button button.btn-next {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+.jtable-view .jtable-footer .jtable-footer-paging-button button.btn-prev {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.jtable-view .jtable-footer .jtable-footer-paging-button .total-page {
+  margin-left: 10px;
+}
+.jtable-view .jtable-footer .jtable-footer-paging-button:after {
+  content: "";
+  clear: both;
+  display: table;
+}
+@media screen and (max-width: 600px) {
+  .jtable-view .jtable-footer .jtable-footer-paging-button,
+.jtable-view .jtable-footer .jtable-footer-paging-info {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    float: left;
+  }
 }
 
 .text-center {
   text-align: center;
-}
-/*# sourceMappingURL=jtable.css.map */
+}/*# sourceMappingURL=jtable.css.map */

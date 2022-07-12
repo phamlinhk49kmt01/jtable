@@ -1,18 +1,51 @@
-$border :1px solid #e5e5e5;
+$border: 1px solid #e5e5e5;
 $cellPading: 7.5px;
 
 .jtable-view {
+    position: relative;
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 500px;
     border: $border;
 
+    .jtable-loader {
+        &.hide {
+            display: none;
+        }
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.2);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        svg path,
+        svg rect {
+            fill: #ff6700;
+        }
+        .loader {
+            font-family: "roboto";
+            border-radius: 5px;
+            padding: 5px 10px;
+            height: max-content;
+            background-color: white;
+            width: max-content;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            align-content: center;
+        }
+    }
+
     .jtable-header {
         user-select: none;
         width: 100%;
         overflow: hidden;
-        .jtable-header-row{
+        .jtable-header-row {
+            background-color: #ccc;
             border-bottom: $border;
             display: inline-flex;
             min-width: 100%;
@@ -21,12 +54,11 @@ $cellPading: 7.5px;
                 padding: $cellPading;
                 font-weight: bold;
             }
-    
+
             .jtable-header-item:not(:last-child) {
                 border-right: $border;
             }
         }
-       
     }
 
     .jtable-body {
@@ -48,26 +80,95 @@ $cellPading: 7.5px;
             .jtable-body-cell:not(:last-child) {
                 border-right: $border;
             }
-            &:hover{
+            &:hover {
                 background-color: #ccc;
                 cursor: default;
             }
         }
 
-        .jtable-body-row-empty{
+        .jtable-body-row-empty {
             display: flex;
-           height: 100%;
+            height: 100%;
             align-items: center;
             justify-content: center;
         }
-
     }
-    .jtable-footer{
-        height: 30px;
-        width: 100%;
+    .jtable-footer {
+        border-top: $border;
+        padding: 5px;
+        .jtable-footer-paging-info {
+            width: fit-content;
+            float: right;
+            text-align: right;
+            padding-top: 5px;
+            margin-right: 10px;
+        }
+
+        .jtable-footer-paging-button {
+            display: flex;
+            align-items: center;
+            float: left;
+            button {
+                background-color: #04aa6d;
+                border: 1px solid green;
+                color: white;
+                padding: 5px 15px;
+                cursor: pointer;
+                float: left;
+                &:not(:last-child) {
+                    border-right: none;
+                }
+                &:hover {
+                    background-color: #3e8e41;
+                }
+                &.btn-next {
+                    border-top-right-radius: 3px;
+                    border-bottom-right-radius: 3px;
+                }
+                &.btn-prev {
+                    border-top-left-radius: 5px;
+                    border-bottom-left-radius: 5px;
+                }
+            }
+            // button {
+            //     padding: 5px 10px;
+            //     border-top: $border;
+            //     border-left: $border;
+            //     border-bottom: $border;
+            //     // &:hover {
+            //     //     box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+            //     // }
+            //     // &.btn-next {
+            //     //     border-right: $border;
+            //     // }
+            //     // &.btn-prev {
+            //     //     border-right: none;
+            //     // }
+            // }
+            .total-page {
+                //   padding-top: 5px;
+                margin-left: 10px;
+            }
+
+            &:after {
+                content: "";
+                clear: both;
+                display: table;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .jtable-footer-paging-button,
+            .jtable-footer-paging-info {
+                width: 100%;
+               display: flex;
+               justify-content: center;
+                float: left;
+            }
+        }
     }
 }
 
-.text-center{
+.text-center {
     text-align: center;
 }
