@@ -16,6 +16,8 @@
             isShowSTT: true,
             selectRow: false,
             selectMultiRow: false,
+            onSelectRow: null,
+            onSelectAllRow: null,
             ajax: {
                 url: null,
                 type: 'post',
@@ -37,7 +39,7 @@
                     dur="0.6s"
                     repeatCount="indefinite"/>
                 </path>
-                </svg> Loading ...
+                </svg> loading ...
                 </div>
             </div>
         `);
@@ -129,7 +131,7 @@
             }
 
             if (table.options.selectRow) {
-                table.options.columns.unshift({ title: '<input type="checkbox">', data: null, selectRow: true, selectMultiRow: table.options.selectMultiRow })
+                table.options.columns.unshift({ title: table.options.selectMultiRow == true ?'<input type="checkbox" class="jtable-check-all">': '', data: null, selectRow: true, selectMultiRow: table.options.selectMultiRow })
             }
 
 
@@ -169,14 +171,13 @@
 
                         let content = "";
                         if (table.options.isShowSTT && column.title == '#') {
-
                             content = indexRow + 1;
                         }
 
                         else {
 
-                            if (table.options.selectRow) {
-                                content = '<input type="checkbox">';
+                            if (column.selectRow == true) {
+                                content = '<input type="checkbox" class="jtable-check-row">';
                             }
                             else{
                                 content = row[column.data];
@@ -192,7 +193,7 @@
                         }
 
                         $row.append($cell);
-                        let $header = $(`.jtable-header-item.jtable-header-column-${indexColumn}`);
+                        let $header =  $(table.element).find(`.jtable-header-item.jtable-header-column-${indexColumn}`);
                         let headerWidth = $header.width();
                         let cellWidth = $cell.width();
                         if (maxWidth[`jtable-body-column-${indexColumn}`] == undefined || maxWidth[`jtable-body-column-${indexColumn}`] < cellWidth) {
@@ -207,21 +208,69 @@
                                 // $(`.jtable-header-column-${indexColumn}`).css('flex', '');
                             }
                         }
-                        $(`.jtable-header-column-${indexColumn}`).css('width', maxWidth[`jtable-body-column-${indexColumn}`] + 'px');
-                        $(`.jtable-body-column-${indexColumn}`).css('width', maxWidth[`jtable-body-column-${indexColumn}`] + 'px');
+                        $(table.element).find(`.jtable-header-column-${indexColumn}`).css('width', maxWidth[`jtable-body-column-${indexColumn}`] + 'px');
+                        $(table.element).find(`.jtable-body-column-${indexColumn}`).css('width', maxWidth[`jtable-body-column-${indexColumn}`] + 'px');
                     }
                 }
 
+                //register event select all
+                if(table.options.selectMultiRow == true){
+                    (table.element).find('.jtable-check-all').prop('checked',false); 
+                    $(table.element).find('.jtable-check-all').unbind('change');
+                    $(table.element).find('.jtable-check-all').change(function(e){
+                        e.stopPropagation();
+                        let isChecked = $(this).is(':checked');
+                        if(isChecked){
+                            $(table.element).find('.jtable-check-row').prop('checked', true);
+                            $(table.element).find('.jtable-body-row').addClass('row-selected');
+
+                            if(table.options.onSelectAllRow !=null){
+                                table.options.onSelectAllRow(table.getDataSelect());
+                            }
+                        }
+                       else{
+                        $(table.element).find('.jtable-check-row').prop('checked', false);
+                            $(table.element).find('.jtable-body-row').removeClass('row-selected');
+                       }
+                   });
+                }
+                //register event check row
+                if (table.options.selectRow) {
+                    $(table.element).find('.jtable-check-row').unbind('change');
+                    $(table.element).find('.jtable-check-row').change(function(e){
+                        e.stopPropagation();
+                        let isChecked = $(this).is(':checked');
+                        if(isChecked){
+                            $(this).parents('.jtable-body-row').addClass('row-selected');
+                            let totalCheck =    $(table.element).find('.jtable-body-row.row-selected').length;
+                            let totalRow = $(table.element).find('.jtable-body-row').length;
+                            if(totalCheck == totalRow){
+                                $(table.element).find('.jtable-check-all').prop('checked',true); 
+                            }
+                            
+                            if(table.options.onSelectRow !=null){
+                                table.options.onSelectRow(table.getDataSelect($(this).parents('.jtable-body-row').index()));
+                            }
+                        }
+                       else{
+                        $(this).parents('.jtable-body-row').removeClass('row-selected');
+                        $(table.element).find('.jtable-check-all').prop('checked',false);
+                       }
+                   });
+                }
+
+
+                $body.unbind('scroll');
                 $body.on('scroll', function () {
                     var left = $body.scrollLeft();
                     if (table.currentScrollLeft != left) {
-                        $('.jtable-header').scrollLeft(left);
+                        $(table.element).find('.jtable-header').scrollLeft(left);
                         table.currentScrollLeft = left;
                     }
                 });
 
                 if ($body.get(0).scrollHeight > $body.height()) {
-                    let headerWidth = $('.jtable-header-row > :last').width();
+                    let headerWidth =  $(table.element).find('.jtable-header-row > :last').width();
 
                     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
                         // no things
@@ -234,7 +283,7 @@
 
             }
             else {
-                $(`.jtable-header-item`).css('flex', '1');
+              $(table.element).find(`.jtable-header-item`).css('flex', '1');
                 let $row = $('<div class="jtable-body-row-empty">').text('Chưa có dữ liệu');
                 $body.append($row);
             }
@@ -261,7 +310,7 @@
             let $pagingButton = $('<div class="jtable-footer-paging-button width-50">');
             $footer.append($pagingButton);
             $footer.append($pagingInfo);
-            $pagingInfo.html(`Hiển thị dòng ${table.data.skip + 1}  đến dòng ${table.data.rows.length + table.data.skip} trên ${table.data.total} dòng`);
+            $pagingInfo.html(`Hiển thị dòng ${table.data.skip + 1}  đến dòng ${table.data.rows.length + table.data.skip} trên ${table.data.total} dòng.`);
 
             let $nextBtn = $(`<button class="btn-next" type="button">`).text('>');
             let $prevBtn = $('<button class="btn-prev" type="button">').text('<');
@@ -313,6 +362,23 @@
 
             table.element.find('.total-page').html(`${pageIndex}&nbsp;/&nbsp;${totalPage}`);
 
+        },
+        getDataSelect(index){
+            if(index == undefined){
+                if(table.options.selectMultiRow== true){
+                    let dataSelected = [];
+                    $(table.element).find('.jtable-body-row').each(function(i, item){
+                        if($(item).hasClass('row-selected')){
+                            dataSelected.push(table.data.rows[i]);
+                        }
+                    });
+                    return dataSelected;
+                }
+                else{
+                    return ( table.data.rows($('.jtable-body-row.row-selected').index()));
+                }               
+            }
+            return table.data.rows[index];
         }
     }
 

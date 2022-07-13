@@ -84,6 +84,9 @@
   background-color: #ccc;
   cursor: default;
 }
+.jtable-view .jtable-body .jtable-body-row.row-selected {
+  background-color: #ccc;
+}
 .jtable-view .jtable-body .jtable-body-row-empty {
   display: flex;
   height: 100%;

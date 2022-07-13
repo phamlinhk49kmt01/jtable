@@ -3,6 +3,13 @@ var page = {
     getData: function () {
         $('#my-table').JTable({
             selectRow: true,
+            selectMultiRow: true,
+            onSelectRow: function(data){
+                console.log(data);
+            },
+            onSelectAllRow: function(datas){
+                console.log(datas);
+            },
             ajax: {
                 url: 'https://dummyjson.com/products',
                 type: 'get',
