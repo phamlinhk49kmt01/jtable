@@ -1,18 +1,18 @@
 $border: 1px solid #e5e5e5;
-$cellPading: 7.5px;
+$cellPading: 7.5px 15px;
 
 .jtable-view {
     position: relative;
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 500px;
     border: $border;
 
     .jtable-loader {
         &.hide {
             display: none;
         }
+
         position: absolute;
         left: 0;
         top: 0;
@@ -22,10 +22,12 @@ $cellPading: 7.5px;
         display: flex;
         justify-content: center;
         align-items: center;
+
         svg path,
         svg rect {
             fill: #ff6700;
         }
+
         .loader {
             font-family: "roboto";
             border-radius: 5px;
@@ -43,7 +45,10 @@ $cellPading: 7.5px;
     .jtable-header {
         user-select: none;
         width: 100%;
-        overflow: hidden;
+        overflow-x: hidden;
+        overflow-y:visible;
+
+
         .jtable-header-row {
             background-color: #ccc;
             border-bottom: $border;
@@ -53,6 +58,7 @@ $cellPading: 7.5px;
             .jtable-header-item {
                 padding: $cellPading;
                 font-weight: bold;
+                white-space: nowrap;
             }
 
             .jtable-header-item:not(:last-child) {
@@ -65,6 +71,7 @@ $cellPading: 7.5px;
         width: 100%;
         overflow: auto;
         flex: 1;
+
         .jtable-body-row {
             min-width: 100%;
             border-bottom: $border;
@@ -81,11 +88,13 @@ $cellPading: 7.5px;
             .jtable-body-cell:not(:last-child) {
                 border-right: $border;
             }
+
             &:hover {
                 background-color: #ccc;
                 cursor: default;
             }
-            &.row-selected{
+
+            &.row-selected {
                 background-color: #ccc;
             }
         }
@@ -97,14 +106,15 @@ $cellPading: 7.5px;
             justify-content: center;
         }
     }
+
     .jtable-footer {
         border-top: $border;
         padding: 5px;
+
         .jtable-footer-paging-info {
             width: fit-content;
             float: right;
             text-align: right;
-            padding-top: 5px;
             margin-right: 10px;
         }
 
@@ -112,29 +122,34 @@ $cellPading: 7.5px;
             display: flex;
             align-items: center;
             float: left;
+
             button {
-                background-color: #04aa6d;
+                background-color: darkgray;
                 border: 1px solid green;
                 color: white;
-                padding: 5px 15px;
+                padding: 0px 10px;
                 cursor: pointer;
                 float: left;
+
                 &:not(:last-child) {
                     border-right: none;
                 }
+
                 &:hover {
                     background-color: #3e8e41;
                 }
+
                 &.btn-next {
-                    border-top-right-radius: 3px;
-                    border-bottom-right-radius: 3px;
+                    border-top-right-radius: 5px;
+                    border-bottom-right-radius: 5px;
                 }
+
                 &.btn-prev {
                     border-top-left-radius: 5px;
                     border-bottom-left-radius: 5px;
                 }
             }
-           
+
             .total-page {
                 //   padding-top: 5px;
                 margin-left: 10px;
@@ -151,8 +166,8 @@ $cellPading: 7.5px;
             .jtable-footer-paging-button,
             .jtable-footer-paging-info {
                 width: 100%;
-               display: flex;
-               justify-content: center;
+                display: flex;
+                justify-content: center;
                 float: left;
             }
         }

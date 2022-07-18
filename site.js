@@ -14,7 +14,6 @@ var page = {
                 url: 'https://dummyjson.com/products',
                 type: 'get',
                 dataResponse: function (data) {
-                   // return [];
                     return {
                         rows: data.products,
                         total: data.total
